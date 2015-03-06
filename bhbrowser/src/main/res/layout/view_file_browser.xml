@@ -1,0 +1,92 @@
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    xmlns:fa="http://schemas.android.com/apk/res-auto"
+    >
+
+    <com.beardedhen.androidbootstrap.FontAwesomeText
+        android:id="@+id/back_button"
+        android:layout_alignParentLeft="true"
+        android:textSize="32sp"
+        fa:fa_icon="fa-angle-left"
+        android:textColor="@color/text_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_margin"
+        />
+
+    <TextView
+        android:id="@+id/browser_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Title"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/title_text"
+        style="@style/file_browser_text"
+        android:ellipsize="end"
+        android:padding="@dimen/default_margin"
+        />
+
+    <View
+        android:id="@+id/title_div"
+        style="@style/divider"
+        android:layout_below="@+id/browser_title"
+        />
+
+    <TextView
+        android:id="@+id/current_directory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/browser_title"
+        tools:text="/data/data/local"
+        android:textSize="@dimen/medium_text"
+        style="@style/file_browser_text"
+        android:ellipsize="start"
+        android:padding="@dimen/default_margin"
+        />
+
+    <View
+        android:id="@+id/path_div"
+        style="@style/divider"
+        android:layout_below="@+id/current_directory"
+        />
+
+    <ListView
+        android:id="@+id/browser_list_view"
+        android:layout_below="@+id/path_div"
+        android:layout_above="@+id/select_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:listSelector="#CCCCCC"
+        android:dividerHeight="1px"
+        />
+
+    <View
+        android:id="@+id/list_div"
+        style="@style/divider"
+        android:layout_below="@+id/browser_list_view"
+        />
+
+    <RelativeLayout
+        android:id="@+id/select_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        >
+
+            <Button
+                android:id="@+id/dir_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/default_margin"
+                />
+
+    </RelativeLayout>
+
+</RelativeLayout>

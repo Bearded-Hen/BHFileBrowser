@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="horizontal"
+    android:background="@android:color/white"
+    >
+
+    <com.beardedhen.androidbootstrap.FontAwesomeText
+        android:id="@+id/folder_item_icon"
+        android:textSize="32sp"
+        android:textColor="@color/text_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        tools:text="Image001.jpg"
+        android:id="@+id/folder_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/min_margin"
+        android:textSize="@dimen/min_text"
+        style="@style/file_browser_text"
+        android:ellipsize="end"
+        />
+
+</LinearLayout>
+
