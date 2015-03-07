@@ -14,6 +14,7 @@ import com.beardedhen.bhbrowser.lib.DirectoryView;
 import com.beardedhen.bhbrowser.lib.FileBrowserController;
 import com.beardedhen.bhbrowser.lib.SelectMode;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class FileBrowserDialog extends DialogFragment {
@@ -22,10 +23,17 @@ public class FileBrowserDialog extends DialogFragment {
     private FileBrowserController controller;
     private DirectoryView directoryView;
 
-    public static FileBrowserDialog newInstance(Bundle args, FileSelectedListener listener) {
-        FileBrowserDialog fragment = new FileBrowserDialog();
+    public static FileBrowserDialog newInstance(final Bundle args,
+                                                final FileSelectedListener listener) {
+        final FileBrowserDialog fragment = new FileBrowserDialog();
         fragment.setArguments(args);
-        fragment.setListener(listener);
+        fragment.setListener( new FileSelectedListener() {
+            @Override
+            public void fileSelected(File file) {
+                listener.fileSelected( file );
+                fragment.dismiss();
+            }
+        });
         return fragment;
     }
 
