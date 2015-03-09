@@ -14,6 +14,7 @@ import com.beardedhen.bhbrowser.lib.DirectoryView;
 import com.beardedhen.bhbrowser.lib.FileBrowserController;
 import com.beardedhen.bhbrowser.lib.SelectMode;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class FileBrowserDialog extends DialogFragment {
@@ -22,10 +23,17 @@ public class FileBrowserDialog extends DialogFragment {
     private FileBrowserController controller;
     private DirectoryView directoryView;
 
-    public static FileBrowserDialog newInstance(Bundle args, FileSelectedListener listener) {
-        FileBrowserDialog fragment = new FileBrowserDialog();
+    public static FileBrowserDialog newInstance(final Bundle args,
+                                                final FileSelectedListener listener) {
+        final FileBrowserDialog fragment = new FileBrowserDialog();
         fragment.setArguments(args);
-        fragment.setListener(listener);
+        fragment.setListener( new FileSelectedListener() {
+            @Override
+            public void fileSelected(File file) {
+                listener.fileSelected( file );
+                fragment.dismiss();
+            }
+        });
         return fragment;
     }
 
@@ -53,22 +61,29 @@ public class FileBrowserDialog extends DialogFragment {
     private FileBrowserController buildBrowserInstance(Bundle args) {
         String startDir = args.getString(Actions.FB_START_DIR);
         String browserTitle = args.getString(Actions.FB_BROWSER_TITLE);
-        boolean showHiddenFiles = args.getBoolean(Actions.FB_SHOW_HIDDEN_FILES, true);
+        boolean showHiddenFiles = args.getBoolean(Actions.FB_SHOW_HIDDEN_FILES, false);
 
         ArrayList<String> extensionList = args.getStringArrayList(Actions.FB_FILE_EXTENSIONS);
         SelectMode selectMode = (SelectMode)
                 args.getSerializable(Actions.FB_SELECT_MODE);
 
-        FileBrowserController controller = new FileBrowserController(directoryView, startDir, listener);
-        controller.setSelectMode(selectMode != null ? selectMode : SelectMode.FILE);
-        controller.setShowHiddenFiles(showHiddenFiles);
-
-        if (extensionList != null) {
-            controller.setFilterExtensions(extensionList);
-        }
-        if (browserTitle != null) {
-            controller.setBrowserTitle(browserTitle);
-        }
+        FileBrowserController controller =
+                new FileBrowserController(directoryView,
+                                          browserTitle,
+                                          startDir,
+                                          selectMode != null ? selectMode : SelectMode.FILE,
+                                          showHiddenFiles,
+                                          extensionList,
+                                          listener);
+//        controller.setSelectMode(selectMode != null ? selectMode : SelectMode.FILE);
+//        controller.setShowHiddenFiles(showHiddenFiles);
+//
+//        if (extensionList != null) {
+//            controller.setFilterExtensions(extensionList);
+//        }
+//        if (browserTitle != null) {
+//            controller.setBrowserTitle(browserTitle);
+//        }
         return controller;
     }
 
