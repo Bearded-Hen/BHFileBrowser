@@ -2,13 +2,13 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode = Integer.parseInt(VERSION_CODE)
+        versionName = VERSION_NAME
     }
     buildTypes {
         release {
@@ -23,3 +23,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.beardedhen:androidbootstrap:1.1.0'
 }
+
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
