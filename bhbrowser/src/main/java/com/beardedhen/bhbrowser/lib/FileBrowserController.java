@@ -26,9 +26,20 @@ public class FileBrowserController implements FileBrowser, FileBrowserView.Brows
     private DirectoryView view;
     private String browserTitle;
 
-    public FileBrowserController(DirectoryView view, String startDir, FileSelectedListener listener) {
+    public FileBrowserController(DirectoryView view,
+                                 String browserTitle,
+                                 String startDir,
+                                 SelectMode selectMode,
+                                 boolean showHiddenFiles,
+                                 List<String> extensionList,
+                                 FileSelectedListener listener) {
         this.view = view;
         this.view.setFileBrowserListener(this);
+        setBrowserTitle( browserTitle );
+        this.selectMode = selectMode;
+        this.showHiddenFiles = showHiddenFiles;
+        this.filterFileExtensions.addAll( extensionList );
+
         this.listener = listener;
 
         if (TextUtils.isEmpty(startDir)) {
@@ -38,6 +49,8 @@ public class FileBrowserController implements FileBrowser, FileBrowserView.Brows
         this.selectMode = SelectMode.FILE;
         this.browserTitle = "Pick any file...";
         this.showHiddenFiles = true;
+
+        this.view.setSelectControlEnabled(selectMode == SelectMode.DIR);
 
         changeDirectory(startDir);
     }
@@ -96,20 +109,19 @@ public class FileBrowserController implements FileBrowser, FileBrowserView.Brows
         loadFileList();
     }
 
-    public void setFilterExtensions(List<String> extensions) {
-        filterFileExtensions.clear();
-        filterFileExtensions.addAll(extensions);
-    }
-
-    public void setFileSelectedListener(FileSelectedListener listener) {
-        this.listener = listener;
-    }
-
-    public void setSelectMode(SelectMode selectMode) {
-        this.selectMode = selectMode;
-        this.view.setSelectControlEnabled(selectMode == SelectMode.DIR);
-    }
-
+//    public void setFilterExtensions(List<String> extensions) {
+//        filterFileExtensions.clear();
+//        filterFileExtensions.addAll(extensions);
+//    }
+//    public void setFileSelectedListener(FileSelectedListener listener) {
+//        this.listener = listener;
+//    }
+//
+//    public void setSelectMode(SelectMode selectMode) {
+//        this.selectMode = selectMode;
+//        this.view.setSelectControlEnabled(selectMode == SelectMode.DIR);
+//    }
+//
     private void loadFileList() {
         directoryContents.clear();
 
@@ -153,9 +165,9 @@ public class FileBrowserController implements FileBrowser, FileBrowserView.Brows
         return lhs.getFileName().toLowerCase().compareTo(rhs.getFileName().toLowerCase());
     }
 
-    public void setShowHiddenFiles(boolean show) {
-        showHiddenFiles = show;
-    }
+//    public void setShowHiddenFiles(boolean show) {
+//        showHiddenFiles = show;
+//    }
 
     @Override public void setDirectoryView(DirectoryView directoryView) {
         this.view = directoryView;

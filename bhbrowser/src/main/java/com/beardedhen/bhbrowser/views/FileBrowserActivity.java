@@ -11,6 +11,7 @@ import com.beardedhen.bhbrowser.lib.SelectMode;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FileBrowserActivity extends Activity implements FileSelectedListener {
 
@@ -39,26 +40,37 @@ public class FileBrowserActivity extends Activity implements FileSelectedListene
             startDir = intent.getStringExtra(Actions.FB_START_DIR);
         }
 
-        FileBrowserController controller = new FileBrowserController(browserView, startDir, this);
-
+        SelectMode selectMode = SelectMode.FILE;
         if (intent.hasExtra(Actions.FB_SELECT_MODE)) {
-            SelectMode selectMode = (SelectMode)
+            selectMode = (SelectMode)
                     intent.getSerializableExtra(Actions.FB_SELECT_MODE);
-            controller.setSelectMode(selectMode);
         }
 
+        List<String> extensionList = null;
         if (intent.hasExtra(Actions.FB_FILE_EXTENSIONS)) {
-            ArrayList<String> extensionList = intent.getStringArrayListExtra(Actions.FB_FILE_EXTENSIONS);
-            controller.setFilterExtensions(extensionList);
+            extensionList = intent.getStringArrayListExtra(Actions.FB_FILE_EXTENSIONS);
         }
+
+        boolean showHiddenFiles = false;
         if (intent.hasExtra(Actions.FB_SHOW_HIDDEN_FILES)) {
-            boolean showHiddenFiles = intent.getBooleanExtra(Actions.FB_SHOW_HIDDEN_FILES, true);
-            controller.setShowHiddenFiles(showHiddenFiles);
+            showHiddenFiles = intent.getBooleanExtra(Actions.FB_SHOW_HIDDEN_FILES, true);
         }
+
+        String browserTitle = null;
         if (intent.hasExtra(Actions.FB_BROWSER_TITLE)) {
-            String browserTitle = intent.getStringExtra(Actions.FB_BROWSER_TITLE);
+            browserTitle = intent.getStringExtra(Actions.FB_BROWSER_TITLE);
             controller.setBrowserTitle(browserTitle);
         }
+
+        FileBrowserController controller = new FileBrowserController(
+                browserView,
+                browserTitle,
+                startDir,
+                selectMode,
+                showHiddenFiles,
+                extensionList,
+                this);
+
         return controller;
     }
 

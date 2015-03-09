@@ -33,21 +33,23 @@ public class FolderItemFilter implements FilenameFilter {
     }
 
     private boolean matchesExtension(String filename) {
-        boolean matches = allowedExtensions.isEmpty();
 
-        if (!matches) {
+        if( allowedExtensions.isEmpty() ) {
+            return true;
+        }
+
             int extensionIndex = filename.lastIndexOf('.');
 
             if (extensionIndex != -1) {
-                String fileExtension = filename.substring(extensionIndex, filename.length()).toLowerCase();
+            String fileExtension = filename.substring(extensionIndex + 1, filename.length()).toLowerCase();
 
                 for (String extension : allowedExtensions) {
-                    if (fileExtension.toLowerCase().contains(extension)) {
-                        matches = true;
-                    }
+                if (fileExtension.toLowerCase().equals(extension)) {
+                   return true;
                 }
             }
         }
-        return matches;
+
+        return false;
     }
 }
