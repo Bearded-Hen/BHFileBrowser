@@ -7,11 +7,11 @@ BHFileBrowser is a simple file chooser for Android applications that uses FontAw
 
 ### Getting Started
 
-Import the bhbrowser module into your Android Studio project and ensure that your app module specifies it as a dependency.
+Add the following line to your build.gradle file.
 
 ```java
 dependencies {
-   compile project (':bhbrowser')
+   compile 'com.beardedhen:bhfilebrowser:+'
 }
 ```
 
